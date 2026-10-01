@@ -2,11 +2,87 @@ import React, { useState } from 'react'
 import { Magnetic } from '../components/cursor'
 import Navbar from '../components/navbar'
 
+// Reusable Image Carousel Sub-component
+function ImageCarousel({ images, title, onExpand }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  if (!images || images.length === 0) return null
+
+  const handlePrev = (e) => {
+    e.stopPropagation()
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+  }
+
+  const handleNext = (e) => {
+    e.stopPropagation()
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+  }
+
+  return (
+    <div 
+      onClick={() => onExpand(images[currentIndex])}
+      className="relative w-full h-64 sm:h-80 mb-6 rounded-2xl overflow-hidden bg-neutral-100 cursor-pointer group/carousel"
+    >
+      {/* Current Slide Image */}
+      <img 
+        src={images[currentIndex]} 
+        alt={`${title} - Slide ${currentIndex + 1}`}
+        className="w-full h-full object-cover group-hover/carousel:scale-105 transition-transform duration-500" 
+      />
+
+      {/* Hover Overlay with View Prompt */}
+      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/carousel:opacity-100 transition-opacity flex items-center justify-center">
+        <span className="text-xs font-medium text-white bg-black/60 px-4 py-2 rounded-full backdrop-blur-xs">
+          Expand Image ↗
+        </span>
+      </div>
+
+      {/* Navigation Arrows (Shown if multiple images exist) */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={handlePrev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center text-xs font-bold transition-all z-10"
+            aria-label="Previous Image"
+          >
+            ←
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center text-xs font-bold transition-all z-10"
+            aria-label="Next Image"
+          >
+            →
+          </button>
+
+          {/* Carousel Dot Indicators */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+            {images.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setCurrentIndex(idx)
+                }}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  currentIndex === idx ? 'bg-white w-4' : 'bg-white/50'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 export default function Achievements() {
   const [selectedFilter, setSelectedFilter] = useState('All')
   const [activeImage, setActiveImage] = useState(null)
 
-  // Easily add image URLs (local assets or external links) to any achievement object
+  // Each achievement now holds an array of images (`images`) for carousel support
   const achievements = [
     {
       id: 1,
@@ -16,7 +92,10 @@ export default function Achievements() {
       date: 'Sep 2026',
       description: 'Built HackMe44, an end-to-end command-line interface tool built with Commander.js during a 24-hour hackathon.',
       tags: ['Node.js', 'CLI', 'Winner'],
-      imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80', // Replace with your image link
+      images: [
+        'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80'
+      ],
       proofLink: '#'
     },
     {
@@ -27,7 +106,10 @@ export default function Achievements() {
       date: 'Feb 2026',
       description: 'Represented IIITDM Jabalpur E-Cell as part of the Mind the Product team, securing second position overall.',
       tags: ['Product Management', 'Strategy', 'Pitching'],
-      imageUrl: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80', // Replace with your image link
+      images: [
+        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1200&q=80'
+      ],
       proofLink: '#'
     },
     {
@@ -38,7 +120,9 @@ export default function Achievements() {
       date: 'Aug 2026',
       description: 'Participated as part of Team Liftoff in the national space-technology hackathon organized by ISRO and Hack2skill.',
       tags: ['ISRO', 'Space Tech', 'Team Liftoff'],
-      imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80', // Replace with your image link
+      images: [
+        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80'
+      ],
       proofLink: '#'
     },
     {
@@ -49,7 +133,7 @@ export default function Achievements() {
       date: 'Jul 2026',
       description: 'Cleared Round 1 screening and completed the Round 2 proctored online technical assessment.',
       tags: ['Problem Solving', 'Data Structures', 'Algorithms'],
-      imageUrl: null, // Set to null if no image is available
+      images: [],
       proofLink: '#'
     }
   ]
@@ -66,7 +150,7 @@ export default function Achievements() {
       <Navbar title="Adarsh Deshmukh" subtitle="MERN Stack Dev" />
 
       {/* Main Container */}
-      <main className="max-w-6xl mx-auto my-auto w-full py-12 md:py-20">
+      <main className="max-w-4xl mx-auto my-auto w-full py-12 md:py-20">
         
         {/* Header Section */}
         <div className="text-center mb-16">
@@ -82,29 +166,14 @@ export default function Achievements() {
             </span>
           </h1>
 
-          {/* Category Filter Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedFilter(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs font-medium transition-all ${
-                  selectedFilter === cat
-                    ? 'bg-neutral-950 text-white shadow-md'
-                    : 'bg-white text-neutral-700 hover:bg-neutral-100 border border-black/5'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+          
         </div>
 
-        {/* Achievements Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Vertical Stack List (One achievement below another) */}
+        <div className="flex flex-col gap-8">
           {filteredAchievements.map((item) => (
-            <Magnetic key={item.id} strength={0.08} cursorText="PREVIEW" className="w-full">
-              <div className="p-8 rounded-3xl bg-white border border-black/5 hover:border-black/20 shadow-xs hover:shadow-md transition-all flex flex-col justify-between h-full group">
+            <Magnetic key={item.id} strength={0.05} cursorText="VIEW" className="w-full">
+              <div className="p-8 sm:p-10 rounded-3xl bg-white border border-black/5 hover:border-black/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group">
                 
                 <div>
                   {/* Top Header: Category & Date */}
@@ -118,34 +187,24 @@ export default function Achievements() {
                   </div>
 
                   {/* Title & Role */}
-                  <h3 className="text-2xl font-bold text-neutral-900 group-hover:text-black transition-colors mb-1">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-neutral-900 group-hover:text-black transition-colors mb-1">
                     {item.title}
                   </h3>
-                  <p className="text-sm font-semibold text-neutral-700 mb-4">
+                  <p className="text-sm sm:text-base font-semibold text-neutral-700 mb-6">
                     {item.role}
                   </p>
 
-                  {/* Optional Image Preview Container */}
-                  {item.imageUrl && (
-                    <div 
-                      onClick={() => setActiveImage(item.imageUrl)}
-                      className="relative w-full h-48 mb-6 rounded-2xl overflow-hidden bg-neutral-100 cursor-pointer group/img"
-                    >
-                      <img 
-                        src={item.imageUrl} 
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500" 
-                      />
-                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="text-xs font-medium text-white bg-black/60 px-3 py-1.5 rounded-full backdrop-blur-xs">
-                          Expand Certificate ↗
-                        </span>
-                      </div>
-                    </div>
+                  {/* Inline Image Carousel */}
+                  {item.images && item.images.length > 0 && (
+                    <ImageCarousel 
+                      images={item.images} 
+                      title={item.title} 
+                      onExpand={setActiveImage} 
+                    />
                   )}
 
                   {/* Description */}
-                  <p className="text-neutral-600 text-sm leading-relaxed mb-6">
+                  <p className="text-neutral-600 text-sm sm:text-base leading-relaxed mb-6">
                     {item.description}
                   </p>
 
@@ -164,14 +223,10 @@ export default function Achievements() {
 
                 {/* Footer Action Links */}
                 <div className="flex items-center justify-between pt-4 border-t border-neutral-100">
-                  {item.imageUrl ? (
-                    <button
-                      onClick={() => setActiveImage(item.imageUrl)}
-                      className="text-xs font-semibold text-neutral-900 hover:underline flex items-center gap-1"
-                    >
-                      <span>View Attachment</span>
-                      <span>📷</span>
-                    </button>
+                  {item.images && item.images.length > 0 ? (
+                    <span className="text-xs font-semibold text-neutral-500 flex items-center gap-1.5">
+                      <span>📷 {item.images.length} Attachment{item.images.length > 1 ? 's' : ''}</span>
+                    </span>
                   ) : (
                     <span className="text-xs text-neutral-400 italic">No image attached</span>
                   )}
@@ -181,7 +236,7 @@ export default function Achievements() {
                       href={item.proofLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full bg-neutral-950 text-white hover:bg-neutral-800 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-5 py-2.5 rounded-full bg-neutral-950 text-white hover:bg-neutral-800 transition-colors"
                     >
                       <span>Verify</span>
                       <svg
@@ -212,7 +267,7 @@ export default function Achievements() {
       {/* Lightbox / Image Modal */}
       {activeImage && (
         <div 
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 animate-fadeIn"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
           onClick={() => setActiveImage(null)}
         >
           <div className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center justify-center">
