@@ -98,7 +98,7 @@ function Navbar({
             <header className="w-full flex items-center justify-between border-b border-black/10 pb-6 z-30 relative">
                 <div className="flex items-center gap-3">
                     <Magnetic strength={0.15}>
-                        <span className="font-bold text-lg tracking-tight cursor-default">Adarsh Deshmukh</span>
+                        <a href='/' className="font-bold text-lg tracking-tight cursor-default">Adarsh Deshmukh</a>
                     </Magnetic>
                     <span className="text-xs px-2.5 py-0.5 rounded-full bg-black/5 text-neutral-600 font-mono">
                         {subtitle}
