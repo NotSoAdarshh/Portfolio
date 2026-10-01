@@ -21,7 +21,7 @@ export default function Home() {
         <div className="flex flex-wrap items-center justify-center gap-6">
           <Magnetic strength={0.3}>
             <a
-              href="#projects"
+              href="/projects"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-neutral-950 text-white font-medium text-sm shadow-lg hover:shadow-xl transition-all"
             >
               <span>Explore Projects</span>
@@ -44,7 +44,7 @@ export default function Home() {
 
           <Magnetic strength={0.25}>
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white border border-neutral-300 font-medium text-sm text-neutral-900 shadow-sm hover:border-neutral-400 transition-all"
             >
               <span>Get in Touch</span>
@@ -53,7 +53,7 @@ export default function Home() {
 
           <Magnetic strength={0.3}>
             <a
-              href="#achievements"
+              href="/achievements"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-neutral-950 text-white font-medium text-sm shadow-lg hover:shadow-xl transition-all"
             >
               <span>Explore Achievements</span>
@@ -73,6 +73,16 @@ export default function Home() {
               </svg>
             </a>
           </Magnetic>
+
+          <Magnetic strength={0.25}>
+            <a
+              href="/about"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white border border-neutral-300 font-medium text-sm text-neutral-900 shadow-sm hover:border-neutral-400 transition-all"
+            >
+              <span>About Me</span>
+            </a>
+          </Magnetic>
+
         </div>
 
         {/* Portfolio Cards Grid */}
