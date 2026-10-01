@@ -10,7 +10,6 @@ router.get('/stats', async (req, res) => {
     return res.status(500).json({ error: 'GitHub PAT is missing in environment variables.' })
   }
 
-  // Simplified query targeting core user metrics
   const query = `
     query {
       viewer {
@@ -26,6 +25,16 @@ router.get('/stats', async (req, res) => {
         contributionsCollection {
           totalCommitContributions
           restrictedContributionsCount
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                date
+                contributionCount
+                color
+              }
+            }
+          }
         }
       }
     }
@@ -49,9 +58,27 @@ router.get('/stats', async (req, res) => {
       return res.status(400).json({ errors: data.errors })
     }
 
-    const viewer = data.data.viewer
+    const viewer = data.data?.viewer || {}
+    const calendar = viewer.contributionsCollection?.contributionCalendar
 
-    const totalForks = viewer.repositories.nodes.reduce(
+    // Safely map contribution days to scale levels (0-4)
+    const contributionDays = calendar?.weeks?.flatMap(week =>
+      (week.contributionDays || []).map(day => {
+        let level = 0
+        if (day.contributionCount > 0 && day.contributionCount <= 3) level = 1
+        else if (day.contributionCount > 3 && day.contributionCount <= 6) level = 2
+        else if (day.contributionCount > 6 && day.contributionCount <= 9) level = 3
+        else if (day.contributionCount > 9) level = 4
+
+        return {
+          date: day.date,
+          count: day.contributionCount,
+          level
+        }
+      })
+    ) || []
+
+    const totalForks = (viewer.repositories?.nodes || []).reduce(
       (acc, repo) => acc + (repo.forkCount || 0), 0
     )
 
@@ -61,11 +88,13 @@ router.get('/stats', async (req, res) => {
 
     res.json({
       stats: {
-        repos: viewer.repositories.totalCount || 0,
+        repos: viewer.repositories?.totalCount || 0,
         forks: totalForks,
         commits: totalCommits,
-        mergedPRs: viewer.pullRequests.totalCount || 0
-      }
+        mergedPRs: viewer.pullRequests?.totalCount || 0
+      },
+      contributions: contributionDays,
+      totalContributions: calendar?.totalContributions || 0
     })
   } catch (error) {
     console.error('Error fetching GitHub stats:', error)

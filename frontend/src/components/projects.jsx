@@ -63,24 +63,8 @@ export default function Projects() {
             </span>
           </h1>
 
-          {/* Language Filters */}
-          {!loading && !error && languages.length > 1 && (
-            <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
-              {languages.map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => setSelectedFilter(lang)}
-                  className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${
-                    selectedFilter === lang
-                      ? 'bg-neutral-950 text-white shadow-md'
-                      : 'bg-white text-neutral-700 hover:bg-neutral-100 border border-black/5'
-                  }`}
-                >
-                  {lang}
-                </button>
-              ))}
-            </div>
-          )}
+          
+          
         </div>
 
         {/* Loading Skeletons */}
