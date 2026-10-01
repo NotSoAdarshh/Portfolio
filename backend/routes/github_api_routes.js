@@ -69,9 +69,9 @@ router.get('/projects', async (req, res) => {
       liveUrl: repo.homepageUrl || null,
       stars: repo.stargazerCount,
       forks: repo.forkCount,
-      language: repo.primaryLanguage ? repo.primaryLanguage.name : 'JavaScript',
-      languageColor: repo.primaryLanguage ? repo.primaryLanguage.color : '#f1e05a',
-      topics: repo.repositoryTopics.nodes.map(t => t.topic.name)
+      language: repo.primaryLanguage ? repo.primaryLanguage.name : 'Other',
+      languageColor: repo.primaryLanguage ? repo.primaryLanguage.color : '#858585',
+      topics: repo.repositoryTopics ? repo.repositoryTopics.nodes.map(t => t.topic.name) : []
     }))
 
     res.json({ projects })

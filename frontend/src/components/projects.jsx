@@ -9,23 +9,30 @@ export default function Projects() {
   const [selectedFilter, setSelectedFilter] = useState('All')
 
   useEffect(() => {
+    const controller = new AbortController()
+
     const fetchProjects = async () => {
       try {
-        // Endpoint matching your backend route
-        const response = await fetch('/api/projects')
+        const response = await fetch('/api/projects', { signal: controller.signal })
         if (!response.ok) {
           throw new Error(`Failed to fetch projects (Status: ${response.status})`)
         }
         const data = await response.json()
         setProjects(data.projects || [])
       } catch (err) {
-        setError(err.message)
+        if (err.name !== 'AbortError') {
+          setError(err.message)
+        }
       } finally {
-        setLoading(false)
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchProjects()
+
+    return () => controller.abort()
   }, [])
 
   // Extract unique languages for filter tabs
@@ -104,7 +111,7 @@ export default function Projects() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredProjects.map((project) => (
               <Magnetic key={project.id} strength={0.1} cursorText="VIEW" className="w-full">
-                <div className="p-8 rounded-3xl bg-white border border-black/5 hover:border-black/20 shadow-xs hover:shadow-md transition-all flex flex-col justify-between h-full group">
+                <div className="p-8 rounded-3xl bg-white border border-black/5 hover:border-black/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group">
                   
                   <div>
                     {/* Header line: Language badge & Stars/Forks */}
@@ -112,10 +119,10 @@ export default function Projects() {
                       <div className="flex items-center gap-2">
                         <span 
                           className="w-2.5 h-2.5 rounded-full" 
-                          style={{ backgroundColor: project.languageColor || '#f1e05a' }}
+                          style={{ backgroundColor: project.languageColor || '#858585' }}
                         ></span>
                         <span className="text-xs font-semibold text-neutral-600">
-                          {project.language || 'JavaScript'}
+                          {project.language || 'Other'}
                         </span>
                       </div>
 
