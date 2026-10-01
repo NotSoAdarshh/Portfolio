@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Magnetic } from '../components/cursor'
 import Navbar from '../components/navbar'
 
 export default function Projects() {
@@ -110,62 +109,87 @@ export default function Projects() {
         {!loading && !error && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredProjects.map((project) => (
-              <Magnetic key={project.id} strength={0.1} cursorText="VIEW" className="w-full">
-                <div className="p-8 rounded-3xl bg-white border border-black/5 hover:border-black/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group">
-                  
-                  <div>
-                    {/* Header line: Language badge & Stars/Forks */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-2">
-                        <span 
-                          className="w-2.5 h-2.5 rounded-full" 
-                          style={{ backgroundColor: project.languageColor || '#858585' }}
-                        ></span>
-                        <span className="text-xs font-semibold text-neutral-600">
-                          {project.language || 'Other'}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-4 text-xs font-mono text-neutral-500">
-                        <span>★ {project.stars ?? 0}</span>
-                        <span>⌥ {project.forks ?? 0}</span>
-                      </div>
+              <div 
+                key={project.id} 
+                className="p-8 rounded-3xl bg-white border border-black/5 hover:border-black/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group"
+              >
+                <div>
+                  {/* Header line: Language badge & Stars/Forks */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span 
+                        className="w-2.5 h-2.5 rounded-full" 
+                        style={{ backgroundColor: project.languageColor || '#858585' }}
+                      ></span>
+                      <span className="text-xs font-semibold text-neutral-600">
+                        {project.language || 'Other'}
+                      </span>
                     </div>
 
-                    {/* Project Title */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 mb-2 group-hover:text-black transition-colors">
-                      {project.name}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-neutral-600 text-sm leading-relaxed mb-6">
-                      {project.description}
-                    </p>
-
-                    {/* Topics / Tags */}
-                    {project.topics && project.topics.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {project.topics.map((topic) => (
-                          <span 
-                            key={topic} 
-                            className="text-[11px] font-mono px-3 py-1 rounded-full bg-neutral-100 text-neutral-600"
-                          >
-                            #{topic}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    <div className="flex items-center gap-4 text-xs font-mono text-neutral-500">
+                      <span>★ {project.stars ?? 0}</span>
+                      <span>⌥ {project.forks ?? 0}</span>
+                    </div>
                   </div>
 
-                  {/* Actions / Links */}
-                  <div className="flex items-center gap-3 pt-4 border-t border-neutral-100">
+                  {/* Project Title */}
+                  <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 mb-2 group-hover:text-black transition-colors">
+                    {project.name}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-neutral-600 text-sm leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+
+                  {/* Topics / Tags */}
+                  {project.topics && project.topics.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {project.topics.map((topic) => (
+                        <span 
+                          key={topic} 
+                          className="text-[11px] font-mono px-3 py-1 rounded-full bg-neutral-100 text-neutral-600"
+                        >
+                          #{topic}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Actions / Links */}
+                <div className="flex items-center gap-3 pt-4 border-t border-neutral-100">
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-full bg-neutral-950 text-white hover:bg-neutral-800 transition-colors"
+                  >
+                    <span>Repository</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M7 17L17 7" />
+                      <path d="M7 7h10v10" />
+                    </svg>
+                  </a>
+
+                  {project.liveUrl && (
                     <a
-                      href={project.githubUrl}
+                      href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-full bg-neutral-950 text-white hover:bg-neutral-800 transition-colors"
+                      className="inline-flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-full bg-neutral-100 text-neutral-800 hover:bg-neutral-200 transition-colors"
                     >
-                      <span>Repository</span>
+                      <span>Live Demo</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
@@ -177,40 +201,14 @@ export default function Projects() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <path d="M7 17L17 7" />
-                        <path d="M7 7h10v10" />
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
                       </svg>
                     </a>
-
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-full bg-neutral-100 text-neutral-800 hover:bg-neutral-200 transition-colors"
-                      >
-                        <span>Live Demo</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                          <polyline points="15 3 21 3 21 9" />
-                          <line x1="10" y1="14" x2="21" y2="3" />
-                        </svg>
-                      </a>
-                    )}
-                  </div>
-
+                  )}
                 </div>
-              </Magnetic>
+              </div>
             ))}
           </div>
         )}
