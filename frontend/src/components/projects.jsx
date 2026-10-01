@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Magnetic } from '../components/cursor'
 import Navbar from '../components/navbar'
 
-function Projects() {
+export default function Projects() {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -11,10 +11,10 @@ function Projects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        // Replace with your actual backend URL (e.g. http://localhost:5000/api/projects)
+        // Endpoint matching your backend route
         const response = await fetch('/api/projects')
         if (!response.ok) {
-          throw new Error('Failed to fetch projects')
+          throw new Error(`Failed to fetch projects (Status: ${response.status})`)
         }
         const data = await response.json()
         setProjects(data.projects || [])
@@ -28,7 +28,7 @@ function Projects() {
     fetchProjects()
   }, [])
 
-  // Extract unique languages for quick filtering
+  // Extract unique languages for filter tabs
   const languages = ['All', ...new Set(projects.map(p => p.language).filter(Boolean))]
 
   const filteredProjects = selectedFilter === 'All' 
@@ -56,7 +56,6 @@ function Projects() {
               software & engineering
             </span>
           </h1>
-          
 
           {/* Language Filters */}
           {!loading && !error && languages.length > 1 && (
@@ -95,7 +94,7 @@ function Projects() {
         {/* Error State */}
         {error && (
           <div className="text-center p-12 bg-white rounded-3xl border border-black/5">
-            <p className="text-neutral-500 text-sm mb-4">Unable to load repositories directly from GitHub API.</p>
+            <p className="text-neutral-500 text-sm mb-4">Unable to load repositories from backend API.</p>
             <span className="text-xs font-mono bg-red-50 text-red-600 px-3 py-1.5 rounded-full">{error}</span>
           </div>
         )}
@@ -113,16 +112,16 @@ function Projects() {
                       <div className="flex items-center gap-2">
                         <span 
                           className="w-2.5 h-2.5 rounded-full" 
-                          style={{ backgroundColor: project.languageColor }}
+                          style={{ backgroundColor: project.languageColor || '#f1e05a' }}
                         ></span>
                         <span className="text-xs font-semibold text-neutral-600">
-                          {project.language}
+                          {project.language || 'JavaScript'}
                         </span>
                       </div>
 
                       <div className="flex items-center gap-4 text-xs font-mono text-neutral-500">
-                        <span>★ {project.stars}</span>
-                        <span>⌥ {project.forks}</span>
+                        <span>★ {project.stars ?? 0}</span>
+                        <span>⌥ {project.forks ?? 0}</span>
                       </div>
                     </div>
 
@@ -137,7 +136,7 @@ function Projects() {
                     </p>
 
                     {/* Topics / Tags */}
-                    {project.topics.length > 0 && (
+                    {project.topics && project.topics.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-6">
                         {project.topics.map((topic) => (
                           <span 
@@ -213,5 +212,3 @@ function Projects() {
     </div>
   )
 }
-
-export default Projects
