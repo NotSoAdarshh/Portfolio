@@ -3,13 +3,12 @@ import { Magnetic } from '../components/cursor'
 import Navbar from '../components/navbar'
 
 function Contact() {
-  const email = 'adarsh.deshmukh@iiitdmj.ac.in'
+  const email = 'adarshdeshmukh00000@gmail.com'
 
   const socials = [
-    { name: 'GitHub', handle: '@adarsh-deshmukh', url: 'https://github.com' },
-    { name: 'LinkedIn', handle: 'Adarsh Deshmukh', url: 'https://linkedin.com' },
-    { name: 'Twitter / X', handle: '@adarsh_deshmukh', url: 'https://twitter.com' },
-    { name: 'Instagram', handle: '@adarsh_deshmukh', url: 'https://instagram.com' }
+    { name: 'GitHub', handle: '@NotSoAdarshh', url: 'https://github.com/NotSoAdarshh' },
+    { name: 'LinkedIn', handle: 'Adarsh Deshmukh', url: 'nkedin.com/in/adarsh-deshmukh-608539359/' },
+    { name: 'Instagram', handle: '@not_soo_adarshh', url: 'https://www.instagram.com/not_soo_adarshh?stkn=MXdycWRlYmZ4MWJlbQ==' },
   ]
 
   return (
@@ -80,7 +79,7 @@ function Contact() {
             <span className="text-xs font-semibold text-neutral-400 uppercase tracking-widest block mb-4 ml-2">
               Social Profiles
             </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {socials.map((social) => (
                 <Magnetic key={social.name} strength={0.15} cursorText="VISIT" className="w-full">
                   <a
