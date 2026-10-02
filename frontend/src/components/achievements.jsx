@@ -184,7 +184,7 @@ export default function Achievements() {
         {/* Vertical Stack List (One achievement below another) */}
         <div className="flex flex-col gap-8">
           {filteredAchievements.map((item) => (
-            <Magnetic key={item.id} strength={0.05} cursorText="VIEW" className="w-full">
+            <div className="w-full">
               <div className="p-8 sm:p-10 rounded-3xl bg-white border border-black/5 hover:border-black/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group">
                 
                 <div>
@@ -244,7 +244,8 @@ export default function Achievements() {
                   )}
 
                   {item.proofLink && (
-                    <a
+                    <Magnetic>
+                      <a
                       href={item.proofLink}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -266,11 +267,12 @@ export default function Achievements() {
                         <path d="M7 7h10v10" />
                       </svg>
                     </a>
+                    </Magnetic>
                   )}
                 </div>
 
               </div>
-            </Magnetic>
+            </div>
           ))}
         </div>
 
