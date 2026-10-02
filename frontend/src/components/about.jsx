@@ -59,7 +59,7 @@ export default function About() {
 
         {/* Bio & Education Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Magnetic strength={0.08} className="w-full md:col-span-2">
+          <div  className="w-full md:col-span-2">
             <div className="p-8 rounded-3xl bg-white border border-black/5 shadow-xs hover:shadow-md transition-all h-full flex flex-col justify-between">
               <div>
                 <span className="text-xs font-semibold text-neutral-400 uppercase tracking-widest block mb-2">
@@ -73,9 +73,9 @@ export default function About() {
                 </p>
               </div>
             </div>
-          </Magnetic>
+          </div>
 
-          <Magnetic strength={0.08} className="w-full">
+          <div className="w-full">
             <div className="p-8 rounded-3xl bg-white border border-black/5 shadow-xs hover:shadow-md transition-all h-full flex flex-col justify-between">
               <div>
                 <span className="text-xs font-semibold text-neutral-400 uppercase tracking-widest block mb-2">
@@ -92,7 +92,7 @@ export default function About() {
                 </p>
               </div>
             </div>
-          </Magnetic>
+          </div>
         </div>
 
         {/* Technical Stack Grid */}
@@ -102,7 +102,7 @@ export default function About() {
           </span>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {techStack.map((group) => (
-              <Magnetic key={group.category} strength={0.08} className="w-full">
+              <div className="w-full">
                 <div className="p-8 rounded-3xl bg-white border border-black/5 shadow-xs hover:shadow-md transition-all h-full">
                   <h4 className="text-sm font-bold text-neutral-900 mb-4 pb-2 border-b border-neutral-100">
                     {group.category}
@@ -118,7 +118,7 @@ export default function About() {
                     ))}
                   </div>
                 </div>
-              </Magnetic>
+              </div>
             ))}
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function About() {
           </span>
           <div className="space-y-4">
             {experiences.map((exp) => (
-              <Magnetic key={exp.role} strength={0.05} className="w-full">
+              <div className="w-full">
                 <div className="p-8 rounded-3xl bg-white border border-black/5 shadow-xs hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
                     <h4 className="text-lg font-bold text-neutral-900">
@@ -147,7 +147,7 @@ export default function About() {
                     {exp.period}
                   </span>
                 </div>
-              </Magnetic>
+              </div>
             ))}
           </div>
         </div>
