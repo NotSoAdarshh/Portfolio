@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../components/navbar'
+import { Magnetic } from './cursor'
 
 export default function Projects() {
   const [projects, setProjects] = useState([])
@@ -143,7 +144,8 @@ export default function Projects() {
 
                 {/* Actions / Links */}
                 <div className="flex items-center gap-3 pt-4 border-t border-neutral-100">
-                  <a
+                  <Magnetic>
+                    <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -165,6 +167,7 @@ export default function Projects() {
                       <path d="M7 7h10v10" />
                     </svg>
                   </a>
+                  </Magnetic>
 
                   {project.liveUrl && (
                     <a
