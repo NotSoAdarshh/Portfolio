@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../components/navbar'
+import { Magnetic } from './cursor'
 
 export default function Home() {
   const [stats, setStats] = useState({ repos: 0, forks: 0, commits: 0, mergedPRs: 0 })
@@ -109,6 +110,7 @@ export default function Home() {
 
         {/* Interactive Showcase Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-6">
+          <Magnetic>
           <a
             href="/projects"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-neutral-950 text-white font-medium text-sm shadow-lg hover:shadow-xl transition-all"
@@ -129,14 +131,18 @@ export default function Home() {
               <path d="m12 5 7 7-7 7" />
             </svg>
           </a>
+          </Magnetic>
 
+          <Magnetic>
           <a
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white border border-neutral-300 font-medium text-sm text-neutral-900 shadow-sm hover:border-neutral-400 transition-all"
           >
             <span>Get in Touch</span>
           </a>
+          </Magnetic>
 
+          <Magnetic>
           <a
             href="/achievements"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-neutral-950 text-white font-medium text-sm shadow-lg hover:shadow-xl transition-all"
@@ -157,18 +163,22 @@ export default function Home() {
               <path d="m12 5 7 7-7 7" />
             </svg>
           </a>
+          </Magnetic>
 
+          <Magnetic>
           <a
             href="/about"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white border border-neutral-300 font-medium text-sm text-neutral-900 shadow-sm hover:border-neutral-400 transition-all"
           >
             <span>About Me</span>
           </a>
+          </Magnetic>
         </div>
 
         {/* Social Media Small Boxes */}
         <div className="flex items-center justify-center gap-4 mt-8">
           {socialLinks.map((social) => (
+            <Magnetic>
             <a
               key={social.name}
               href={social.url}
@@ -179,6 +189,7 @@ export default function Home() {
             >
               {social.icon}
             </a>
+             </Magnetic>
           ))}
         </div>
 
