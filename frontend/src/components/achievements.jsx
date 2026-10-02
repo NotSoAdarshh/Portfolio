@@ -1,10 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Magnetic } from '../components/cursor'
 import Navbar from '../components/navbar'
 
-// Reusable Image Carousel Sub-component
-function ImageCarousel({ images, title, onExpand }) {
+// Reusable Image Carousel Sub-component with Auto-scroll
+function ImageCarousel({ images, title, onExpand, autoScrollInterval = 3500 }) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+
+  // Auto-scroll effect
+  useEffect(() => {
+    if (!images || images.length <= 1 || isPaused) return
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+    }, autoScrollInterval)
+
+    return () => clearInterval(timer)
+  }, [images, isPaused, autoScrollInterval])
 
   if (!images || images.length === 0) return null
 
@@ -21,6 +33,8 @@ function ImageCarousel({ images, title, onExpand }) {
   return (
     <div 
       onClick={() => onExpand(images[currentIndex])}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
       className="relative w-full h-64 sm:h-80 mb-6 rounded-2xl overflow-hidden bg-neutral-100 cursor-pointer group/carousel"
     >
       {/* Current Slide Image */}
@@ -65,8 +79,8 @@ function ImageCarousel({ images, title, onExpand }) {
                   e.stopPropagation()
                   setCurrentIndex(idx)
                 }}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  currentIndex === idx ? 'bg-white w-4' : 'bg-white/50'
+                className={`h-2 rounded-full transition-all ${
+                  currentIndex === idx ? 'bg-white w-4' : 'bg-white/50 w-2'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -165,8 +179,6 @@ export default function Achievements() {
               key achievements
             </span>
           </h1>
-
-          
         </div>
 
         {/* Vertical Stack List (One achievement below another) */}
@@ -194,7 +206,7 @@ export default function Achievements() {
                     {item.role}
                   </p>
 
-                  {/* Inline Image Carousel */}
+                  {/* Inline Auto-Scrolling Image Carousel */}
                   {item.images && item.images.length > 0 && (
                     <ImageCarousel 
                       images={item.images} 
