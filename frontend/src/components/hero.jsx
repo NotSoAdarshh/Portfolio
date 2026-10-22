@@ -230,9 +230,9 @@ export default function Home() {
               <span className="text-xs text-neutral-400">Loading contribution map...</span>
             </div>
           ) : error ? (
-            <p className="text-xs text-neutral-400 italic">Unable to load contribution activity.</p>
+            <p className="text-xs text-neutral-400 italic">Unable to load contribution activity: {error}</p>
           ) : CalendarComponent && contributions.length > 0 ? (
-            <div className="w-full overflow-x-auto flex justify-center py-2">
+            <div className="w-full overflow-x-auto flex justify-start md:justify-center py-2">
               <CalendarComponent
                 data={contributions}
                 theme={calendarTheme}
@@ -246,7 +246,9 @@ export default function Home() {
             </div>
           ) : (
             <p className="text-xs text-neutral-400 italic">
-              {CalendarComponent ? 'No contribution data available.' : 'Run `npm install react-activity-calendar` in frontend folder.'}
+              {CalendarComponent 
+                ? 'No contribution data available. Please verify backend endpoint.' 
+                : 'Run `npm install react-activity-calendar` in your frontend project root.'}
             </p>
           )}
         </div>

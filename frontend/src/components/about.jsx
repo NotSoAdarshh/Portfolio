@@ -51,7 +51,7 @@ export default function About() {
         
         {/* Header Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-black/10 bg-white/70 text-xs font-semibold text-neutral-700 tracking-wider uppercase">
+          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-black/10 bg-white/70 text-md font-semibold text-neutral-700 tracking-wider uppercase">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             Background & Philosophy
           </div>
@@ -72,7 +72,7 @@ export default function About() {
           <div className="w-full md:col-span-2">
             <div className="p-8 rounded-3xl bg-white border border-black/5 shadow-xs hover:shadow-md transition-all h-full flex flex-col justify-between">
               <div>
-                <span className="text-xs font-semibold text-neutral-400 uppercase tracking-widest block mb-2">
+                <span className="text-md font-semibold text-neutral-400 uppercase tracking-widest block mb-2">
                   My Approach
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 mb-3">
@@ -88,16 +88,16 @@ export default function About() {
           <div className="w-full">
             <div className="p-8 rounded-3xl bg-white border border-black/5 shadow-xs hover:shadow-md transition-all h-full flex flex-col justify-between">
               <div>
-                <span className="text-xs font-semibold text-neutral-400 uppercase tracking-widest block mb-2">
+                <span className="text-md font-semibold text-neutral-400 uppercase tracking-widest block mb-2">
                   Education
                 </span>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">
                   PDPM IIITDM Jabalpur
                 </h3>
-                <p className="text-xs font-mono text-neutral-500 mb-3">
+                <p className="text-md font-mono text-neutral-500 mb-3">
                   B.Tech in ECE
                 </p>
-                <p className="text-neutral-600 text-xs leading-relaxed">
+                <p className="text-neutral-600 text-md leading-relaxed">
                   Balancing core coursework in digital signal systems and hardware mechanics alongside practical expertise in full-stack web development and C++ data structures and algorithms.
                 </p>
               </div>
@@ -107,7 +107,7 @@ export default function About() {
 
         {/* Technical Stack Grid */}
         <div className="mb-12">
-          <span className="text-xs font-semibold text-neutral-400 uppercase tracking-widest block mb-4 ml-2">
+          <span className="text-md font-semibold text-neutral-400 uppercase tracking-widest block mb-4 ml-2">
             Technical Stack
           </span>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -121,7 +121,7 @@ export default function About() {
                     {group.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-xs font-medium px-3 py-1.5 rounded-full bg-neutral-100 text-neutral-700"
+                        className="text-md font-medium px-3 py-1.5 rounded-full bg-neutral-100 text-neutral-700"
                       >
                         {skill}
                       </span>
@@ -135,7 +135,7 @@ export default function About() {
 
         {/* Leadership & Involvement */}
         <div>
-          <span className="text-xs font-semibold text-neutral-400 uppercase tracking-widest block mb-4 ml-2">
+          <span className="text-md font-semibold text-neutral-400 uppercase tracking-widest block mb-4 ml-2">
             Leadership & Campus Community
           </span>
           <div className="space-y-4">
@@ -143,25 +143,25 @@ export default function About() {
               <div key={index} className="w-full">
                 <div className="p-8 rounded-3xl bg-white border border-black/5 shadow-xs hover:shadow-md transition-all flex flex-col md:flex-row md:items-start justify-between gap-4">
                   <div>
-                    <h4 className="text-lg font-bold text-neutral-900">
+                    <h4 className="text-2xl font-bold text-neutral-900">
                       {exp.role}
                     </h4>
-                    <span className="text-xs font-semibold text-neutral-500 block mb-3">
+                    <span className="text-md font-semibold text-neutral-500 block mb-3">
                       {exp.organization}
                     </span>
                     {exp.bullets ? (
-                      <ul className="list-disc list-inside text-xs text-neutral-600 max-w-2xl leading-relaxed space-y-1.5">
+                      <ul className="list-disc list-inside text-md text-neutral-600 max-w-2xl leading-relaxed space-y-1.5">
                         {exp.bullets.map((bullet, idx) => (
                           <li key={idx}>{bullet}</li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-xs text-neutral-600 max-w-2xl leading-relaxed">
+                      <p className="text-md text-neutral-600 max-w-2xl leading-relaxed">
                         {exp.description}
                       </p>
                     )}
                   </div>
-                  <span className="text-xs font-mono text-neutral-400 shrink-0 px-3 py-1 bg-neutral-100 rounded-full w-fit">
+                  <span className="text-sm font-mono text-neutral-400 shrink-0 px-3 py-1 bg-neutral-100 rounded-full w-fit">
                     {exp.period}
                   </span>
                 </div>
